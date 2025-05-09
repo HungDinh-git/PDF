@@ -1,24 +1,22 @@
 package com.example.pdf;
 
 import android.os.Bundle;
-
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import com.github.barteksc.pdfviewer.PDFView;
 
 public class MainActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+
+        // Khởi tạo PDFView
+        PDFView pdfView = findViewById(R.id.pdfView);
+
+        // Tải file PDF từ thư mục assets
+        pdfView.fromAsset("sample.pdf")
+                .enableSwipe(true) // Cho phép vuốt để chuyển trang
+                .enableDoubletap(true) // Cho phép phóng to/thu nhỏ bằng double-tap
+                .load();
     }
 }
